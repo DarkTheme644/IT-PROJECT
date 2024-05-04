@@ -41,6 +41,13 @@ def create_order():
         return render_template("create-order.html")
 
 
+@service.route('/order-history')  # отображение данных из бд
+def orders():
+    taxi_orders = Taxi_order.query.order_by(Taxi_order.date.desc()).all()  # query даёт обратиться к бд
+    # заказов, сортировка по дате, first - отображение только первой записи, все - all, desc - descending
+    return render_template("order-history.html", taxi_orders=taxi_orders)
+
+
 @service.route('/')  # т.е. главная страничка
 @service.route('/home')  # + домашняя страничка
 def index():
