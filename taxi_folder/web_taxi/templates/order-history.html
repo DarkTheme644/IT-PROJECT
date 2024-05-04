@@ -1,0 +1,25 @@
+{% extends 'base.html' %}  <!-- синтаксис шаблонизатора jinja -->
+
+{% block title %}
+История заказов
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>История заказов</h1>
+
+    {% if taxi_orders|length > 0 %}
+
+        {% for elem in taxi_orders %}  <!-- тут тоже -->
+        <div class="alert alert-info">
+            <p><b>Заказ №{{ elem.id }}</b></p>
+            <p><b>Адрес отправления: </b>{{ elem.start }}</p>
+            <p><b>Адрес назначения: </b>{{ elem.finish }}</p>
+            <p><b>Дата: </b>{{ elem.date.date() }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+    <p>Заказов пока что нет</p>
+    {% endif %}
+</div>
+{% endblock %}
