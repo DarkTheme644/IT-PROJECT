@@ -49,6 +49,19 @@ def register():
         username = request.form.get('username')
         email = request.form.get('email')
         password = request.form.get('password')
+
+        if len(password) < 8:  # проверка на длину пароля
+            flash('Пароль должен быть не менее 8 символов', 'warning')
+            return redirect(url_for('register'))
+
+        if User.query.filter_by(username=username).first():  # проверка занято ли имя
+            flash('Имя пользователя уже занято', 'warning')
+            return redirect(url_for('register'))
+
+        if User.query.filter_by(email=email).first():  # проверка занята ли почта
+            flash('Email уже зарегистрирован', 'warning')
+            return redirect(url_for('register'))
+
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
 
         new_user = User(username=username, email=email, password=hashed_password)
@@ -65,12 +78,17 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
+
         user = User.query.filter_by(email=email).first()
         if user and check_password_hash(user.password, password):  # проверка на правильность введённых данных
             login_user(user)
             return redirect(url_for('index'))
+        elif not user:
+            flash('Неправильный email', 'danger')
+            return redirect(url_for('login'))
         else:
-            flash('При входе произошла ошибка. Проверьте введённые данные.', 'danger')
+            flash('Неправильный пароль', 'danger')
+            return redirect(url_for('login'))
 
     return render_template('login.html')
 
