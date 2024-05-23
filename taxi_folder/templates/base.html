@@ -35,8 +35,13 @@
       <div class="col-6 col-md">
         <h5>Функции</h5>
         <ul class="list-unstyled text-small">
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="/create-order">Заказать такси</a></li>
-          <li class="mb-1"><a class="link-secondary text-decoration-none" href="/order-history">История заказов</a></li>
+            {% if current_user.is_authenticated %}
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="/create-order">Заказать такси</a></li>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="/order-history">История заказов</a></li>
+            {% else %}
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="/login">Войти</a>
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="/register">Зарегистрироваться</a>
+            {% endif %}
         </ul>
       </div>
       <div class="col-6 col-md">
