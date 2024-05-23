@@ -8,16 +8,28 @@
 <div class="container">
     <h1>История заказов</h1>
 
-    {% if taxi_orders|length > 0 %}
+    {% if user_orders|length > 0 %}
 
-        {% for elem in taxi_orders %}  <!-- тут тоже -->
-        <div class="alert alert-info">
-            <p><b>Заказ №{{ elem.id }}</b></p>
-            <p><b>Адрес отправления: </b>{{ elem.start }}</p>
-            <p><b>Адрес назначения: </b>{{ elem.finish }}</p>
-            <p><b>Дата: </b>{{ elem.date.date() }}</p>
-        </div>
-        {% endfor %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Номер заказа</th>
+                    <th scope="col">Отпавление</th>
+                    <th scope="col">Прибытие</th>
+                    <th scope="col">Дата</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in user_orders %}
+                <tr>
+                    <th scope="row">{{ order.order_num }}</th>
+                    <td>{{ order.order.start }}</td>
+                    <td>{{ order.order.finish }}</td>
+                    <td>{{ order.order.date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     {% else %}
     <p>Заказов пока что нет</p>
     {% endif %}
