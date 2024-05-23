@@ -6,7 +6,7 @@ from flask_login import UserMixin, LoginManager, login_user, login_required, log
 
 
 service = Flask(__name__)
-service.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///order-history.db'
+service.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 service.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 service.config['SECRET_KEY'] = 'supersecretkey'  # ключ для управления сессией
 
@@ -30,7 +30,7 @@ class Taxi_order(db.Model):
     start = db.Column(db.String(300), nullable=False)  # стринг
     finish = db.Column(db.String(300), nullable=False)
     # макс длины 300, нельзя поле оставлять пустым(nullable)
-    date = db.Column(db.DateTime, default=datetime.utcnow)  # по умолчанию время создания записи
+    date = db.Column(db.DateTime, default=datetime.now)  # по умолчанию время создания записи
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
@@ -118,7 +118,8 @@ def create_order():
             db.session.add(taxi_order)
             db.session.commit()
             return redirect('/order-history')
-        except:
+        except Exception as e:
+            print(f"При создании заказа произошла ошибка: {e}")
             return "При создании заказа произошла ошибка."
     else:
         return render_template("create-order.html")
@@ -127,9 +128,15 @@ def create_order():
 @service.route('/order-history')  # отображение данных из бд
 @login_required
 def orders():
-    taxi_orders = Taxi_order.query.filter_by(user_id=current_user.id).order_by(Taxi_order.date.desc()).all()  # query даёт обратиться к бд
-    # заказов, сортировка по дате, first - отображение только первой записи, все - all, desc - descending
-    return render_template("order-history.html", taxi_orders=taxi_orders)
+    try:
+        taxi_orders = Taxi_order.query.filter_by(user_id=current_user.id).order_by(Taxi_order.date.asc()).all()  # query даёт обратиться к бд
+        # заказов, сортировка по дате, first - отображение только первой записи, все - all, desc - descending
+        user_orders = [{"order_num": idx + 1, "order": order} for idx, order in enumerate(taxi_orders)]
+        return render_template("order-history.html", user_orders=user_orders)
+    except Exception as e:
+        # Log the exception for debugging
+        print(f"При получении истории заказов произошла ошибка: {e}")
+        return "При получении истории заказов произошла ошибка"
 
 
 @service.route('/')  # т.е. главная страничка
