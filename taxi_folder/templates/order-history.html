@@ -25,7 +25,7 @@
                     <th scope="row">{{ order.order_num }}</th>
                     <td>{{ order.order.start }}</td>
                     <td>{{ order.order.finish }}</td>
-                    <td>{{ order.order.date.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>{{ order.order.date.strftime('%d-%m-%Y %H:%M') }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

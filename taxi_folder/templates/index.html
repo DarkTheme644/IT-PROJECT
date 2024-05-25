@@ -7,8 +7,9 @@
 {% block body %}
 <div class="container">
     <h1>Главная страница</h1><br><br>
-    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-        <a class="btn btn-primary btn-lg px-4 gap-3" href="/create-order">Заказать такси</a>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center">
+        <img src="{{ url_for('static', filename='images/big_logo.png') }}" alt="Mai-Taxi Logo" class="me-2" style="height: 200px;">
+        <a class="btn btn-primary btn-lg px-4 gap-3 custom-button" href="/create-order">Заказать такси</a>
       </div>
 </div>
 {% endblock %}

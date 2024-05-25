@@ -12,7 +12,8 @@
 <body>
     <div class="container d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
       <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
-        <span class="fs-4">Mai-Taxi</span>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Mai-Taxi Logo" class="me-2" style="height: 30px;">
+        <span class="fs-4">Mai Taxi</span>
       </a>
 
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
@@ -45,9 +46,13 @@
         </ul>
       </div>
       <div class="col-6 col-md">
-        <h5>Основное</h5>
-        <ul class="list-unstyled text-small">
+          <h5>Основное</h5>
+          <ul class="list-unstyled text-small">
           <li class="mb-1"><a class="link-secondary text-decoration-none" href="/">Главная страница</a></li>
+          {% if current_user.is_authenticated %}
+              <li class="mb-1"><a class="link-secondary text-decoration-none" href="/profile">Профиль</a></li>
+          {% endif %}
+
         </ul>
       </div>
       <div class="col-6 col-md">
