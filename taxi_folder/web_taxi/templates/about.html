@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Страница о нас
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Страница о нас</h1><br>
+        <h3>Этот сервис делает студентка МАИ Аксельрод Анастасия из группы М8О-113Б-23.</h3><br>
+        <img src="{{ url_for('static', filename='images/big_picture.png') }}" alt="Mai-Taxi Logo" class="img-fluid mx-auto d-block" style="height: 500px;">
+</div>
+{% endblock %}
