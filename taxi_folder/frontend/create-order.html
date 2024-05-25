@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Создание заказа
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Создание заказа</h1>
+    <form method="post">
+        <textarea name="start" id="start" class="form-control" placeholder="Введите адрес отправления"></textarea><br>
+        <textarea name="finish" id="finish" class="form-control" placeholder="Введите адрес назначения"></textarea><br>
+        <input type ="submit" class="btn btn-success" value="Заказать">
+    </form>
+</div>
+{% endblock %}
