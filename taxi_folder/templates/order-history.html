@@ -14,7 +14,7 @@
             <thead>
                 <tr>
                     <th scope="col">Номер заказа</th>
-                    <th scope="col">Отпавление</th>
+                    <th scope="col">Отправление</th>
                     <th scope="col">Прибытие</th>
                     <th scope="col">Дата</th>
                 </tr>
@@ -25,7 +25,7 @@
                     <th scope="row">{{ order.order_num }}</th>
                     <td>{{ order.order.start }}</td>
                     <td>{{ order.order.finish }}</td>
-                    <td>{{ order.order.date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>{{ order.order.date.strftime('%Y-%m-%d %H:%M') }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
