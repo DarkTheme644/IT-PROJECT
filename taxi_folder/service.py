@@ -131,6 +131,14 @@ def create_order():
         start = request.form["start"]
         finish = request.form["finish"]
 
+        if not start or not finish:
+            flash('Адрес отправления и адрес назначения не могут быть пустыми.', 'warning')
+            return redirect(url_for('create_order'))
+
+        if start == finish:
+            flash('Адрес отправления и адрес назначения не могут быть одинаковыми.', 'warning')
+            return redirect(url_for('create_order'))
+
         taxi_order = Taxi_order(start=start, finish=finish, user_id=current_user.id)
         try:
             db.session.add(taxi_order)
@@ -152,7 +160,6 @@ def orders():
         user_orders = [{"order_num": idx + 1, "order": order} for idx, order in enumerate(taxi_orders)]
         return render_template("order-history.html", user_orders=user_orders)
     except Exception as e:
-        # Log the exception for debugging
         print(f"При получении истории заказов произошла ошибка: {e}")
         return "При получении истории заказов произошла ошибка"
 
