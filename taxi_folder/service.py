@@ -106,6 +106,24 @@ def profile():
     return render_template('profile.html', name=current_user.username)
 
 
+@service.route('/delete-account', methods=['GET', 'POST'])
+@login_required
+def delete_account():
+    if request.method == 'POST':
+        user = User.query.get(current_user.id)
+
+        Taxi_order.query.filter_by(user_id=current_user.id).delete()  # удаление всех заказов юзера
+
+        db.session.delete(user)  # удаление аккаунта
+        db.session.commit()
+
+        logout_user()
+        flash('Ваш аккаунт был успешно удален', 'success')
+        return redirect(url_for('index'))
+
+    return render_template('delete-account.html')
+
+
 @service.route('/create-order', methods=['POST', 'GET'])
 @login_required
 def create_order():
